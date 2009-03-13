@@ -1,0 +1,18 @@
+!!! xml
+%GovTalkMessage{ :header_ns=>'' }
+  %EnvelopeVersion 1.0
+  %Header
+    %MessageDetails
+      %Class= request_type
+      %Qualifier request
+      %TransactionID= transaction_id
+    %SenderDetails
+      %IDAuthentication
+        %SenderID= sender_id
+        %Authentication
+          %Method= digest_method
+          %Value= digest
+      %EmailAddress= email
+  %GovTalkDetails
+    %Keys
+  = body

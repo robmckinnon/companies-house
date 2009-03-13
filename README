@@ -1,0 +1,30 @@
+Ruby API to UK Companies House XML Gateway.
+
+= Companies House XML Gateway
+
+The Companies House XML Gateway offers electronic access to a core range of
+company information from Companies House Databases. The service is accessible
+online over the internet by authorised XML Gateway customers.
+
+For more details about the Companies House XML Gateway, including how to become
+a registered user see: http://xmlgw.companieshouse.gov.uk/
+
+= Disclaimer
+
+The companies-house rubygem has been developed independently of Companies House.
+It is in no way authorized or supported by Companies House.
+
+= Example usage:
+
+Note usage requires you have a registered account with Companies House:
+http://xmlgw.companieshouse.gov.uk/faq.shtml#hdiafaxga
+
+ require 'rubygems'
+ require 'companies-house'
+
+ CompaniesHouse.sender_id = 'XMLGatewayTestUserID'
+ CompaniesHouse.password = 'password'
+
+ x = CompaniesHouse.name_search 'Canonical'
+
+ x = CompaniesHouse.number_search '05276648'

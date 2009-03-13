@@ -1,0 +1,14 @@
+CHANGELOG
+lib/companies_house/name_search.haml
+lib/companies_house/number_search.haml
+lib/companies_house/request.haml
+lib/companies_house/request.rb
+lib/companies_house.rb
+LICENSE
+Rakefile
+README
+spec/lib/companies_house/request_spec.rb
+spec/lib/companies_house_spec.rb
+spec/spec.opts
+spec/spec_helper.rb
+Manifest
