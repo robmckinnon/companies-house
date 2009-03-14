@@ -85,5 +85,4 @@ describe CompaniesHouse::Request do
     </CompanyDetailsRequest>|
   end
 
-
 end

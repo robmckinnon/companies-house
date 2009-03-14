@@ -4,6 +4,8 @@ require 'uri'
 require 'open-uri'
 require 'digest/md5'
 
+require 'morph'
+require 'hpricot'
 require 'haml'
 
 require File.dirname(__FILE__) + '/companies_house/request'
@@ -36,12 +38,17 @@ module CompaniesHouse
         res, body = http.post(url.path, data, {'Content-type'=>'text/xml;charset=utf-8'})
         case res
           when Net::HTTPSuccess, Net::HTTPRedirection
-            puts "response #{res.body}"
+            xml = res.body
+            doc = Hpricot.XML(xml)
+            xml = doc.at('Body')
+            xml = xml.children.select(&:elem?).first.to_s
+            hash = Hash.from_xml(xml)
+            Morph.from_hash(hash, CompaniesHouse)
           else
-            puts "problem"
+            raise res.inspect
         end
       rescue URI::InvalidURIError
-        puts "URI is no good"
+        raise "URI is no good: " + u
       end
     end
 

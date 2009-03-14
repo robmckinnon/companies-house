@@ -28,3 +28,5 @@ http://xmlgw.companieshouse.gov.uk/faq.shtml#hdiafaxga
  x = CompaniesHouse.name_search 'Canonical'
 
  x = CompaniesHouse.number_search '05276648'
+
+ x = CompaniesHouse.company_details '05276648'
