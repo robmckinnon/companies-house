@@ -22,6 +22,11 @@ module CompaniesHouse
       post(xml)
     end
 
+    def company_details number
+      xml = CompaniesHouse::Request.company_details_xml :company_number=>number
+      post(xml)
+    end
+
     def post(data)
       begin
         u = "http://xmlgw.companieshouse.gov.uk/v1-0/xmlgw/Gateway"

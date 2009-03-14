@@ -10,6 +10,10 @@ module CompaniesHouse
         create default(options).merge(:request_type=>'NumberSearch', :template=>'number_search')
       end
 
+      def company_details_xml options
+        create default(options).merge(:request_type=>'CompanyDetails', :template=>'company_details')
+      end
+
       private
 
       def default options

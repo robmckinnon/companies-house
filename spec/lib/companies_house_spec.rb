@@ -57,4 +57,12 @@ describe CompaniesHouse do
       CompaniesHouse.number_search(@company_number).should == @response_xml
     end
   end
+
+  describe "when asked for company details request" do
+    it 'should perform request correctly' do
+      CompaniesHouse::Request.should_receive(:company_details_xml).with(:company_number=> @company_number).and_return @request_xml
+      CompaniesHouse.should_receive(:post).with(@request_xml).and_return @response_xml
+      CompaniesHouse.company_details(@company_number).should == @response_xml
+    end
+  end
 end
