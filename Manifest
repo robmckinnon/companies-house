@@ -7,6 +7,7 @@ lib/companies_house.rb
 LICENSE
 Rakefile
 README
+companies-house.yml.example
 spec/lib/companies_house/request_spec.rb
 spec/lib/companies_house_spec.rb
 spec/spec.opts

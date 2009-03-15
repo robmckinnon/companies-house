@@ -56,12 +56,14 @@ module CompaniesHouse
       @sender_id = id
     end
     def sender_id
+      config_setup('.') if @sender_id.blank?
       @sender_id
     end
     def password= pw
       @password = pw
     end
     def password
+      config_setup('.') if @password.blank?
       @password
     end
     def email= e
@@ -70,13 +72,26 @@ module CompaniesHouse
     def email
       @email
     end
+
     def digest_method
       'CHMD5'
     end
+
     def create_transaction_id_and_digest
-      transactionId = Time.now.to_i
-      digest = Digest::MD5.hexdigest("#{@sender_id}#{@password}#{transactionId}")
-      return transactionId, digest
+      transaction_id = Time.now.to_i
+      digest = Digest::MD5.hexdigest("#{sender_id}#{password}#{transaction_id}")
+      return transaction_id, digest
+    end
+
+    def config_setup root
+      config_file = "#{root}/config/companies-house.yml"
+      config_file = "#{root}/companies-house.yml" unless File.exist? config_file
+      if File.exist? config_file
+        config = YAML.load_file(config_file)
+        self.sender_id= config['sender_id']
+        self.password= config['password']
+        self.email= config['email']
+      end
     end
   end
 end
