@@ -14,61 +14,44 @@ module CompaniesHouse
   VERSION = "0.0.1" unless defined? CompaniesHouse::VERSION
 
   class << self
+
     def name_search name
       xml = CompaniesHouse::Request.name_search_xml :company_name=>name
-      post(xml)
+      get_response(xml)
     end
 
     def number_search number
       xml = CompaniesHouse::Request.number_search_xml :company_number=>number
-      post(xml)
+      get_response(xml)
     end
 
     def company_details number
       xml = CompaniesHouse::Request.company_details_xml :company_number=>number
-      post(xml)
-    end
-
-    def post(data)
-      begin
-        u = "http://xmlgw.companieshouse.gov.uk/v1-0/xmlgw/Gateway"
-        puts "Checking url #{u}"
-        url = URI.parse u
-        http = Net::HTTP.new(url.host, url.port)
-        res, body = http.post(url.path, data, {'Content-type'=>'text/xml;charset=utf-8'})
-        case res
-          when Net::HTTPSuccess, Net::HTTPRedirection
-            xml = res.body
-            doc = Hpricot.XML(xml)
-            xml = doc.at('Body')
-            xml = xml.children.select(&:elem?).first.to_s
-            hash = Hash.from_xml(xml)
-            Morph.from_hash(hash, CompaniesHouse)
-          else
-            raise res.inspect
-        end
-      rescue URI::InvalidURIError
-        raise "URI is no good: " + u
-      end
+      get_response(xml)
     end
 
     def sender_id= id
       @sender_id = id
     end
+
     def sender_id
       config_setup('.') if @sender_id.blank?
       @sender_id
     end
+
     def password= pw
       @password = pw
     end
+
     def password
       config_setup('.') if @password.blank?
       @password
     end
+
     def email= e
       @email = e
     end
+
     def email
       @email
     end
@@ -93,5 +76,39 @@ module CompaniesHouse
         self.email= config['email']
       end
     end
+
+    def objectify response_xml
+      doc = Hpricot.XML(response_xml)
+      xml = doc.at('Body')
+      if xml && xml.children.select(&:elem?).size > 0
+        xml = xml.children.select(&:elem?).first.to_s
+        hash = Hash.from_xml(xml)
+        Morph.from_hash(hash, CompaniesHouse)
+      else
+        nil
+      end
+    end
+
+    private
+
+      def get_response(data)
+        begin
+          u = "http://xmlgw.companieshouse.gov.uk/v1-0/xmlgw/Gateway"
+          puts "Checking url #{u}"
+          url = URI.parse u
+          http = Net::HTTP.new(url.host, url.port)
+          res, body = http.post(url.path, data, {'Content-type'=>'text/xml;charset=utf-8'})
+          case res
+            when Net::HTTPSuccess, Net::HTTPRedirection
+              xml = res.body
+              objectify xml
+            else
+              raise res.inspect
+          end
+        rescue URI::InvalidURIError
+          raise "URI is no good: " + u
+        end
+      end
+
   end
 end

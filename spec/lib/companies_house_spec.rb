@@ -45,7 +45,7 @@ describe CompaniesHouse do
   describe "when asked for name search request" do
     it 'should perform request correctly' do
       CompaniesHouse::Request.should_receive(:name_search_xml).with(:company_name=> @company_name).and_return @request_xml
-      CompaniesHouse.should_receive(:post).with(@request_xml).and_return @response_xml
+      CompaniesHouse.should_receive(:get_response).with(@request_xml).and_return @response_xml
       CompaniesHouse.name_search(@company_name).should == @response_xml
     end
   end
@@ -53,7 +53,7 @@ describe CompaniesHouse do
   describe "when asked for number search request" do
     it 'should perform request correctly' do
       CompaniesHouse::Request.should_receive(:number_search_xml).with(:company_number=> @company_number).and_return @request_xml
-      CompaniesHouse.should_receive(:post).with(@request_xml).and_return @response_xml
+      CompaniesHouse.should_receive(:get_response).with(@request_xml).and_return @response_xml
       CompaniesHouse.number_search(@company_number).should == @response_xml
     end
   end
@@ -61,7 +61,7 @@ describe CompaniesHouse do
   describe "when asked for company details request" do
     it 'should perform request correctly' do
       CompaniesHouse::Request.should_receive(:company_details_xml).with(:company_number=> @company_number).and_return @request_xml
-      CompaniesHouse.should_receive(:post).with(@request_xml).and_return @response_xml
+      CompaniesHouse.should_receive(:get_response).with(@request_xml).and_return @response_xml
       CompaniesHouse.company_details(@company_number).should == @response_xml
     end
   end

@@ -4,21 +4,21 @@ describe CompaniesHouse::Request do
 
   describe "when asked for name search request xml" do
     it 'should create xml correctly' do
-      request_xml = CompaniesHouse::Request.name_search_xml :company_name=> @company_name
+      request_xml = CompaniesHouse::Request.name_search_xml :company_name => @company_name
       request_xml.strip.should == @name_search_xml.strip
     end
   end
 
   describe "when asked for number search request xml" do
     it 'should create xml correctly' do
-      request_xml = CompaniesHouse::Request.number_search_xml :company_number=> @company_number
+      request_xml = CompaniesHouse::Request.number_search_xml :company_number => @company_number
       request_xml.strip.should == @number_search_xml.strip
     end
   end
 
   describe "when asked for company details request xml" do
     it 'should create xml correctly' do
-      request_xml = CompaniesHouse::Request.company_details_xml :company_number=> @company_number
+      request_xml = CompaniesHouse::Request.company_details_xml :company_number => @company_number
       request_xml.strip.should == @company_details_xml.strip
     end
   end
