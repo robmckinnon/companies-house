@@ -9,9 +9,10 @@ require 'hpricot'
 require 'haml'
 
 require File.dirname(__FILE__) + '/companies_house/request'
+require File.dirname(__FILE__) + '/companies_house/exception'
 
 module CompaniesHouse
-  VERSION = "0.0.1" unless defined? CompaniesHouse::VERSION
+  VERSION = "0.0.2" unless defined? CompaniesHouse::VERSION
 
   class << self
 
@@ -91,7 +92,7 @@ module CompaniesHouse
 
     private
 
-      def get_response(data)
+      def get_response(data, root_element='NameSearch')
         begin
           u = "http://xmlgw.companieshouse.gov.uk/v1-0/xmlgw/Gateway"
           puts "Checking url #{u}"
@@ -103,10 +104,12 @@ module CompaniesHouse
               xml = res.body
               objectify xml
             else
-              raise res.inspect
+              raise CompaniesHouse::Exception.new(res.inspect.to_s)
           end
-        rescue URI::InvalidURIError
-          raise "URI is no good: " + u
+        rescue URI::InvalidURIError => e
+          raise CompaniesHouse::Exception.new(e.class.name + ' ' + e.to_s)
+        rescue SocketError => e
+          raise CompaniesHouse::Exception.new(e.class.name + ' ' + e.to_s)
         end
       end
 
