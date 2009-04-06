@@ -16,18 +16,18 @@ module CompaniesHouse
 
   class << self
 
-    def name_search name
-      xml = CompaniesHouse::Request.name_search_xml :company_name=>name
+    def name_search name, options={}
+      xml = CompaniesHouse::Request.name_search_xml options.merge(:company_name => name)
       get_response(xml)
     end
 
-    def number_search number
-      xml = CompaniesHouse::Request.number_search_xml :company_number=>number
+    def number_search number, options={}
+      xml = CompaniesHouse::Request.number_search_xml options.merge(:company_number => number)
       get_response(xml)
     end
 
-    def company_details number
-      xml = CompaniesHouse::Request.company_details_xml :company_number=>number
+    def company_details number, options={}
+      xml = CompaniesHouse::Request.company_details_xml options.merge(:company_number => number)
       get_response(xml)
     end
 
@@ -94,11 +94,8 @@ module CompaniesHouse
 
       def get_response(data, root_element='NameSearch')
         begin
-          u = "http://xmlgw.companieshouse.gov.uk/v1-0/xmlgw/Gateway"
-          puts "Checking url #{u}"
-          url = URI.parse u
-          http = Net::HTTP.new(url.host, url.port)
-          res, body = http.post(url.path, data, {'Content-type'=>'text/xml;charset=utf-8'})
+          http = Net::HTTP.new("xmlgw.companieshouse.gov.uk", 80)
+          res, body = http.post("/v1-0/xmlgw/Gateway", data, {'Content-type'=>'text/xml;charset=utf-8'})
           case res
             when Net::HTTPSuccess, Net::HTTPRedirection
               xml = res.body
