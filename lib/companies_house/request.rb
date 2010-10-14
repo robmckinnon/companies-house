@@ -29,7 +29,7 @@ module CompaniesHouse
           :digest_method => CompaniesHouse.digest_method,
           :sender_id => CompaniesHouse.sender_id,
           :password => CompaniesHouse.password,
-          :email => CompaniesHouse.email,
+          :email => '',
           :transaction_id => transaction_id }.merge(options)
 
         render_request options[:request_type], template, params

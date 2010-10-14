@@ -11,6 +11,8 @@ require 'haml'
 require File.dirname(__FILE__) + '/companies_house/request'
 require File.dirname(__FILE__) + '/companies_house/exception'
 
+$KCODE = 'UTF8'
+
 module CompaniesHouse
   VERSION = "0.0.2" unless defined? CompaniesHouse::VERSION
 
@@ -62,6 +64,7 @@ module CompaniesHouse
     end
 
     def create_transaction_id_and_digest
+      # transaction_id = (Time.now + 2.minutes - 17.seconds).to_i
       transaction_id = Time.now.to_i
       digest = Digest::MD5.hexdigest("#{sender_id}#{password}#{transaction_id}")
       return transaction_id, digest
