@@ -19,6 +19,9 @@ module CompaniesHouse
       def default options
         options[:search_rows] = 20 unless options.has_key?(:search_rows)
         options[:data_set] = 'LIVE' unless options.has_key?(:data_set)
+        options[:same_as] = nil unless options.has_key?(:same_as)
+        options[:continuation_key] = nil unless options.has_key?(:continuation_key)
+        options[:regression_key] = nil unless options.has_key?(:regression_key)
         options
       end
 

@@ -39,6 +39,31 @@ describe CompaniesHouse::Request do
       request_xml = CompaniesHouse::Request.name_search_xml :company_name => @company_name
       request_xml.strip.should == @name_search_xml.strip
     end
+
+    describe "and same_as flag is set to true" do
+      it 'should create xml correctly' do
+        request_xml = CompaniesHouse::Request.name_search_xml :company_name => @company_name, :same_as => 'true'
+        request_xml.strip.should == @name_search_xml.gsub('      <DataSet>LIVE</DataSet>',"      <DataSet>LIVE</DataSet>\n      <SameAs>true</SameAs>").strip
+      end
+    end
+    describe "and same_as flag is set to false" do
+      it 'should create xml correctly' do
+        request_xml = CompaniesHouse::Request.name_search_xml :company_name => @company_name, :same_as => 'false'
+      request_xml.strip.should == @name_search_xml.strip
+      end
+    end
+    describe "and continuation_key is set" do
+      it 'should create xml correctly' do
+        request_xml = CompaniesHouse::Request.name_search_xml :company_name => @company_name, :continuation_key => '1234'
+        request_xml.strip.should == @name_search_xml.gsub('      <SearchRows>20</SearchRows>',"      <SearchRows>20</SearchRows>\n      <ContinuationKey>1234</ContinuationKey>").strip
+      end
+    end
+    describe "and regression_key is set" do
+      it 'should create xml correctly' do
+        request_xml = CompaniesHouse::Request.name_search_xml :company_name => @company_name, :regression_key => '4321'
+        request_xml.strip.should == @name_search_xml.gsub('      <SearchRows>20</SearchRows>',"      <SearchRows>20</SearchRows>\n      <RegressionKey>4321</RegressionKey>").strip
+      end
+    end
   end
 
   describe "when asked for number search request xml" do

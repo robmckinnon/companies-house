@@ -5,7 +5,7 @@ describe CompaniesHouse do
   describe 'when objectifying xml' do
     describe 'and xml contains expanded unicode' do
       it 'should convert to utf8' do
-        xml = '<Body><company_details><company_name>\xC2\xA3IBRA FINANCIAL SERVICES LIMITED</company_name></company_details></Body>'
+        xml = '<Body><company_details><company_name>£IBRA FINANCIAL SERVICES LIMITED</company_name></company_details></Body>'
         object = CompaniesHouse.objectify xml
         object.company_name.should == "£IBRA FINANCIAL SERVICES LIMITED"
       end

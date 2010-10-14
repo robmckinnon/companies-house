@@ -2,4 +2,10 @@
   %NameSearchRequest{ :request_ns=>'' }
     %CompanyName= company_name
     %DataSet= data_set
+    - if same_as && same_as[/true/i]
+      %SameAs< true
     %SearchRows= search_rows
+    - if continuation_key
+      %ContinuationKey= continuation_key
+    - if regression_key
+      %RegressionKey= regression_key
