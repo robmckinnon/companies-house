@@ -11,7 +11,7 @@ require 'haml'
 require File.dirname(__FILE__) + '/companies_house/request'
 require File.dirname(__FILE__) + '/companies_house/exception'
 
-$KCODE = 'UTF8'
+$KCODE = 'UTF8' unless RUBY_VERSION >= "1.9"
 
 module CompaniesHouse
   VERSION = "0.0.2" unless defined? CompaniesHouse::VERSION
@@ -109,6 +109,8 @@ module CompaniesHouse
         rescue URI::InvalidURIError => e
           raise CompaniesHouse::Exception.new(e.class.name + ' ' + e.to_s)
         rescue SocketError => e
+          raise CompaniesHouse::Exception.new(e.class.name + ' ' + e.to_s)
+        rescue Timeout::Error => e
           raise CompaniesHouse::Exception.new(e.class.name + ' ' + e.to_s)
         end
       end
