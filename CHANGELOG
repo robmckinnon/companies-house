@@ -1,3 +1,5 @@
+v0.0.3. can now set same_as, continuation_key, regression_key on name search request
+
 v0.0.2. better responses when errors occur
 
 v0.0.1. initial release
