@@ -1,4 +1,12 @@
-require 'rubygems'; require 'spec'; require 'lib/companies_house'
+require 'rubygems'
+require 'lib/companies_house'
+
+begin
+  require 'spec'
+rescue LoadError
+  puts "\nYou need to install the rspec gem to perform meta operations on this gem"
+  puts "  sudo gem install rspec\n"
+end
 
 begin
   require 'echoe'
@@ -10,12 +18,13 @@ begin
     m.rubyforge_name = "companies-house"
     m.rdoc_options << '--inline-source'
     m.rdoc_pattern = ["README", "CHANGELOG", "LICENSE"]
-    m.dependencies = ["hpricot >=0.6", "haml >=2.0.9", "activesupport >=2.0.2", "morph >=0.2.6", "unicode >=0.4.0"]
+    m.dependencies = ["hpricot >=0.6", "haml >=2.0.9", "morph >=0.3.1"]
     # m.executable_pattern = 'bin/companies_house'
   end
 
 rescue LoadError
-  puts "You need to install the echoe gem to perform meta operations on this gem"
+  puts "\nYou need to install the echoe gem to perform meta operations on this gem"
+  puts "  sudo gem install echoe\n\n"
 end
 
 desc "Open an irb session preloaded with this library"
