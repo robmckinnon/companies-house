@@ -1,4 +1,3 @@
-require 'rubygems'
 require 'net/http'
 require 'uri'
 require 'open-uri'
@@ -7,6 +6,7 @@ require 'digest/md5'
 require 'morph'
 require 'hpricot'
 require 'haml'
+require 'yaml'
 
 require File.dirname(__FILE__) + '/companies_house/request'
 require File.dirname(__FILE__) + '/companies_house/exception'
@@ -14,7 +14,7 @@ require File.dirname(__FILE__) + '/companies_house/exception'
 $KCODE = 'UTF8' unless RUBY_VERSION >= "1.9"
 
 module CompaniesHouse
-  VERSION = "0.0.4" unless defined? CompaniesHouse::VERSION
+  VERSION = "0.0.5" unless defined? CompaniesHouse::VERSION
 
   class << self
 
@@ -87,7 +87,20 @@ module CompaniesHouse
       if xml && xml.children.select(&:elem?).size > 0
         xml = xml.children.select(&:elem?).first.to_s
         hash = Hash.from_xml(xml)
-        Morph.from_hash(hash, CompaniesHouse)
+        object = Morph.from_hash(hash, CompaniesHouse)
+        if object && object.class.name == 'CompaniesHouse::CompanyDetails'
+          if object.respond_to?(:sic_codes)
+            sic_codes = object.sic_codes
+            if sic_codes.respond_to?(:sic_text) && sic_codes.sic_text
+              sic_codes.morph(:sic_texts, [sic_codes.sic_text])
+            else
+              object.morph(:sic_codes, Morph.from_hash({:sic_codes => {'sic_texts' => []} }) )
+            end
+          else
+            object.morph(:sic_codes, Morph.from_hash({:sic_codes => {'sic_texts' => []} }) )
+          end
+        end
+        object
       else
         nil
       end

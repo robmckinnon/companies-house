@@ -3,11 +3,37 @@ require File.dirname(__FILE__) + '/../spec_helper.rb'
 describe CompaniesHouse do
 
   describe 'when objectifying xml' do
+    it 'should return an instance of CompaniesHouse::CompanyDetails' do
+      xml = '<Body><company_details><company_name>£IBRA FINANCIAL SERVICES LIMITED</company_name></company_details></Body>'
+      object = CompaniesHouse.objectify xml
+      object.class.name.should == 'CompaniesHouse::CompanyDetails'
+    end
     describe 'and xml contains expanded unicode' do
       it 'should convert to utf8' do
         xml = '<Body><company_details><company_name>£IBRA FINANCIAL SERVICES LIMITED</company_name></company_details></Body>'
         object = CompaniesHouse.objectify xml
         object.company_name.should == "£IBRA FINANCIAL SERVICES LIMITED"
+      end
+    end
+    describe 'and xml contains single sic_text' do
+      it 'should convert to sic_code sic_texts' do
+        xml = '<Body><company_details><sic_codes><sic_text>9261 - Operate sports arenas &amp; stadiums</sic_text></sic_codes></company_details></Body>'
+
+        object = CompaniesHouse.objectify xml
+        object.sic_codes.sic_text.should == '9261 - Operate sports arenas & stadiums'
+        object.sic_codes.sic_texts.should == ['9261 - Operate sports arenas & stadiums']
+      end
+    end
+    describe 'and xml contains no sic_text' do
+      it 'should return empty sic_code sic_texts' do
+        xml = '<Body><company_details><sic_codes></sic_codes></company_details></Body>'
+        object = CompaniesHouse.objectify xml
+        object.sic_codes.sic_texts.should == []
+      end
+      it 'should return empty sic_code sic_texts again' do
+        xml = '<Body><company_details><sic_codes><sic_text></sic_text></sic_codes></company_details></Body>'
+        object = CompaniesHouse.objectify xml
+        object.sic_codes.sic_texts.should == []
       end
     end
   end
