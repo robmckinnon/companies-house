@@ -3,37 +3,89 @@ require File.dirname(__FILE__) + '/../spec_helper.rb'
 describe CompaniesHouse do
 
   describe 'when objectifying xml' do
-    it 'should return an instance of CompaniesHouse::CompanyDetails' do
-      xml = '<Body><company_details><company_name>£IBRA FINANCIAL SERVICES LIMITED</company_name></company_details></Body>'
-      object = CompaniesHouse.objectify xml
-      object.class.name.should == 'CompaniesHouse::CompanyDetails'
-    end
-    describe 'and xml contains expanded unicode' do
-      it 'should convert to utf8' do
+    describe 'and xml contains response in Body' do
+      it 'should return an instance of CompaniesHouse::CompanyDetails' do
         xml = '<Body><company_details><company_name>£IBRA FINANCIAL SERVICES LIMITED</company_name></company_details></Body>'
         object = CompaniesHouse.objectify xml
-        object.company_name.should == "£IBRA FINANCIAL SERVICES LIMITED"
+        object.class.name.should == 'CompaniesHouse::CompanyDetails'
       end
-    end
-    describe 'and xml contains single sic_text' do
-      it 'should convert to sic_code sic_texts' do
-        xml = '<Body><company_details><sic_codes><sic_text>9261 - Operate sports arenas &amp; stadiums</sic_text></sic_codes></company_details></Body>'
+      describe 'and xml contains expanded unicode' do
+        it 'should convert to utf8' do
+          xml = '<Body><company_details><company_name>£IBRA FINANCIAL SERVICES LIMITED</company_name></company_details></Body>'
+          object = CompaniesHouse.objectify xml
+          object.company_name.should == "£IBRA FINANCIAL SERVICES LIMITED"
+        end
+      end
+      describe 'and xml contains single sic_text' do
+        it 'should convert to sic_code sic_texts' do
+          xml = '<Body><company_details><sic_codes><sic_text>9261 - Operate sports arenas &amp; stadiums</sic_text></sic_codes></company_details></Body>'
 
-        object = CompaniesHouse.objectify xml
-        object.sic_codes.sic_text.should == '9261 - Operate sports arenas & stadiums'
-        object.sic_codes.sic_texts.should == ['9261 - Operate sports arenas & stadiums']
+          object = CompaniesHouse.objectify xml
+          object.sic_codes.sic_text.should == '9261 - Operate sports arenas & stadiums'
+          object.sic_codes.sic_texts.should == ['9261 - Operate sports arenas & stadiums']
+        end
+      end
+      describe 'and xml contains no sic_text' do
+        it 'should return empty sic_code sic_texts' do
+          xml = '<Body><company_details><sic_codes></sic_codes></company_details></Body>'
+          object = CompaniesHouse.objectify xml
+          object.sic_codes.sic_texts.should == []
+        end
+        it 'should return empty sic_code sic_texts again' do
+          xml = '<Body><company_details><sic_codes><sic_text></sic_text></sic_codes></company_details></Body>'
+          object = CompaniesHouse.objectify xml
+          object.sic_codes.sic_texts.should == []
+        end
       end
     end
-    describe 'and xml contains no sic_text' do
-      it 'should return empty sic_code sic_texts' do
-        xml = '<Body><company_details><sic_codes></sic_codes></company_details></Body>'
-        object = CompaniesHouse.objectify xml
-        object.sic_codes.sic_texts.should == []
+
+    describe 'and xml contains Error' do
+      it 'should raise CompaniesHouse::Exception' do
+        xml = xml_error
+        lambda { CompaniesHouse.objectify xml }.should raise_error(CompaniesHouse::Exception)
       end
-      it 'should return empty sic_code sic_texts again' do
-        xml = '<Body><company_details><sic_codes><sic_text></sic_text></sic_codes></company_details></Body>'
-        object = CompaniesHouse.objectify xml
-        object.sic_codes.sic_texts.should == []
+
+      it 'should include error message in exception' do
+        xml = xml_error
+        lambda { CompaniesHouse.objectify xml }.should raise_error(CompaniesHouse::Exception, 'NameSearch fatal 503: Repeat/non-incremental Transaction ID sent with request - Rejecting')
+      end
+
+      def xml_error
+        %Q|<?xml version="1.0" encoding="UTF-8" ?>
+<GovTalkMessage xsi:schemaLocation="http://www.govtalk.gov.uk/schemas/govtalk/govtalkheader http://xmlgw.companieshouse.gov.uk/v1-0/schema/Egov_ch.xsd" xmlns="http://www.govtalk.gov.uk/schemas/govtalk/govtalkheader" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:gt="http://www.govtalk.gov.uk/schemas/govtalk/core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+  <EnvelopeVersion>1.0</EnvelopeVersion>
+  <Header>
+    <MessageDetails>
+      <Class>NameSearch</Class>
+      <Qualifier>error</Qualifier>
+      <TransactionID>1287070383</TransactionID>
+      <GatewayTimestamp>2010-10-14T16:33:04-00:00</GatewayTimestamp>
+    </MessageDetails>
+    <SenderDetails>
+      <IDAuthentication>
+        <SenderID>63884537357901904930357805221487</SenderID>
+        <Authentication>
+          <Method>CHMD5</Method>
+          <Value>3985a067aa3f4613adcf3589b420f4e2</Value>
+        </Authentication>
+      </IDAuthentication>
+    </SenderDetails>
+  </Header>
+  <GovTalkDetails>
+    <Keys/>
+	<GovTalkErrors>
+	  <Error>
+	    <RaisedBy>NameSearch</RaisedBy>
+	    <Number>503</Number>
+	    <Type>fatal</Type>
+	    <Text>Repeat/non-incremental Transaction ID sent with request - Rejecting</Text>
+	    <Location></Location>
+	  </Error>
+	</GovTalkErrors>
+  </GovTalkDetails>
+  <Body>
+  </Body>
+</GovTalkMessage>|
       end
     end
   end

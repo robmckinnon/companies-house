@@ -14,7 +14,7 @@ require File.dirname(__FILE__) + '/companies_house/exception'
 $KCODE = 'UTF8' unless RUBY_VERSION >= "1.9"
 
 module CompaniesHouse
-  VERSION = "0.0.5" unless defined? CompaniesHouse::VERSION
+  VERSION = "0.0.6" unless defined? CompaniesHouse::VERSION
 
   class << self
 
@@ -83,9 +83,40 @@ module CompaniesHouse
 
     def objectify response_xml
       doc = Hpricot.XML(response_xml)
-      xml = doc.at('Body')
-      if xml && xml.children.select(&:elem?).size > 0
-        xml = xml.children.select(&:elem?).first.to_s
+      qualifier = doc.at('Qualifier')
+      if qualifier && qualifier.inner_text.to_s[/error/]
+        raise_error doc
+      else
+        body = doc.at('Body')
+        if body && body.children.select(&:elem?).size > 0
+          objectify_body body
+        else
+          nil
+        end
+      end
+    end
+
+    private
+
+      def add_to_message attribute, error, message, suffix=''
+        if value = error.at(attribute)
+          message << "#{value.inner_text}#{suffix}"
+        end
+      end
+
+      def raise_error doc
+        message = []
+        if error = doc.at('Error')
+          add_to_message 'RaisedBy', error, message
+          add_to_message 'Type', error, message
+          add_to_message 'Number', error, message, ':'
+          add_to_message 'Text', error, message
+        end
+        raise CompaniesHouse::Exception.new(message.join(' '))
+      end
+
+      def objectify_body body
+        xml = body.children.select(&:elem?).first.to_s
         hash = Hash.from_xml(xml)
         object = Morph.from_hash(hash, CompaniesHouse)
         if object && object.class.name == 'CompaniesHouse::CompanyDetails'
@@ -101,12 +132,7 @@ module CompaniesHouse
           end
         end
         object
-      else
-        nil
       end
-    end
-
-    private
 
       def get_response(data, root_element='NameSearch')
         begin
