@@ -15,5 +15,3 @@ README
 README.rdoc
 spec/lib/companies_house/request_spec.rb
 spec/lib/companies_house_spec.rb
-spec/spec.opts
-spec/spec_helper.rb
