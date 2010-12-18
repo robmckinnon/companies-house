@@ -4,7 +4,7 @@ require 'open-uri'
 require 'digest/md5'
 
 require 'morph'
-require 'hpricot'
+require 'nokogiri'
 require 'haml'
 require 'yaml'
 
@@ -14,7 +14,7 @@ require File.dirname(__FILE__) + '/companies_house/exception'
 $KCODE = 'UTF8' unless RUBY_VERSION >= "1.9"
 
 module CompaniesHouse
-  VERSION = "0.0.7" unless defined? CompaniesHouse::VERSION
+  VERSION = "0.0.8" unless defined? CompaniesHouse::VERSION
 
   class << self
 
@@ -82,7 +82,7 @@ module CompaniesHouse
     end
 
     def objectify response_xml
-      doc = Hpricot.XML(response_xml)
+      doc = Nokogiri::XML(response_xml)
       qualifier = doc.at('Qualifier')
       if qualifier && qualifier.inner_text.to_s[/error/]
         raise_error doc

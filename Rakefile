@@ -18,7 +18,7 @@ begin
     m.rubyforge_name = "companies-house"
     m.rdoc_options << '--inline-source'
     m.rdoc_pattern = ["README", "CHANGELOG", "LICENSE"]
-    m.dependencies = ["hpricot >=0.6", "haml >=2.0.9", "morph >=0.3.1"]
+    m.dependencies = ["nokogiri", "haml >=2.0.9", "morph >=0.3.2"]
     # m.executable_pattern = 'bin/companies_house'
   end
 
