@@ -1,3 +1,5 @@
+v0.0.7. fixes bug preventing unique transaction ids being created when api called frequently
+
 v0.0.6. now raise CompaniesHouse::Exception if response XML contains error
 
 v0.0.5. now sic_codes.sic_texts always returns array

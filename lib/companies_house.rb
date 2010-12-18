@@ -14,7 +14,7 @@ require File.dirname(__FILE__) + '/companies_house/exception'
 $KCODE = 'UTF8' unless RUBY_VERSION >= "1.9"
 
 module CompaniesHouse
-  VERSION = "0.0.6" unless defined? CompaniesHouse::VERSION
+  VERSION = "0.0.7" unless defined? CompaniesHouse::VERSION
 
   class << self
 
@@ -65,7 +65,7 @@ module CompaniesHouse
 
     def create_transaction_id_and_digest
       # transaction_id = (Time.now + 2.minutes - 17.seconds).to_i
-      transaction_id = Time.now.to_i
+      transaction_id = (Time.now.to_f * 100).to_i
       digest = Digest::MD5.hexdigest("#{sender_id}#{password}#{transaction_id}")
       return transaction_id, digest
     end

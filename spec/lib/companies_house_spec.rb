@@ -105,8 +105,9 @@ describe CompaniesHouse do
       @request_xml = '<request/>'
       @response_xml = '<response/>'
 
-      @transaction_id = 123
-      Time.stub!(:now).and_return(mock('time', :to_i => @transaction_id))
+      float_time = 123.45678
+      @transaction_id = 12345
+      Time.stub!(:now).and_return(mock('time', :to_f => float_time))
       @digest = 'digest'
     end
 
