@@ -18,7 +18,7 @@ describe CompaniesHouse do
       end
       describe 'and xml contains single sic_text' do
         it 'should convert to sic_code sic_texts' do
-          xml = '<Body><company_details><sic_codes><sic_text>9261 - Operate sports arenas &amp; stadiums</sic_text></sic_codes></company_details></Body>'
+          xml = '<Body><company_details><SICCodes><SicText>9261 - Operate sports arenas &amp; stadiums</SicText></SICCodes></company_details></Body>'
 
           object = CompaniesHouse.objectify xml
           object.sic_codes.sic_text.should == '9261 - Operate sports arenas & stadiums'
@@ -35,6 +35,13 @@ describe CompaniesHouse do
           xml = '<Body><company_details><sic_codes><sic_text></sic_text></sic_codes></company_details></Body>'
           object = CompaniesHouse.objectify xml
           object.sic_codes.sic_texts.should == []
+        end
+      end
+      describe 'and xml contains multiple sic codes' do
+        it 'should return array of sic codes' do
+          xml = '<Body><CompanyDetails><SICCodes><SicText>2960 - Manufacture of weapons &amp; ammunition</SicText><SicText>3410 - Manufacture of motor vehicles</SicText></SICCodes></CompanyDetails></Body>'
+          object = CompaniesHouse.objectify xml
+          object.sic_codes.sic_texts.should == ['2960 - Manufacture of weapons & ammunition','3410 - Manufacture of motor vehicles']
         end
       end
     end

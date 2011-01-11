@@ -14,7 +14,7 @@ require File.dirname(__FILE__) + '/companies_house/exception'
 $KCODE = 'UTF8' unless RUBY_VERSION >= "1.9"
 
 module CompaniesHouse
-  VERSION = "0.0.8" unless defined? CompaniesHouse::VERSION
+  VERSION = "0.0.9" unless defined? CompaniesHouse::VERSION
 
   class << self
 
@@ -124,6 +124,8 @@ module CompaniesHouse
             sic_codes = object.sic_codes
             if sic_codes.respond_to?(:sic_text) && sic_codes.sic_text
               sic_codes.morph(:sic_texts, [sic_codes.sic_text])
+            elsif sic_codes.respond_to?(:sic_texts) && sic_codes.sic_texts
+              # leave as is
             else
               object.morph(:sic_codes, Morph.from_hash({:sic_codes => {'sic_texts' => []} }) )
             end
