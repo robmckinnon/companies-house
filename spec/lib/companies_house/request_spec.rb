@@ -64,12 +64,25 @@ describe CompaniesHouse::Request do
         request_xml.strip.should == @name_search_xml.gsub('      <SearchRows>20</SearchRows>',"      <SearchRows>20</SearchRows>\n      <RegressionKey>4321</RegressionKey>").strip
       end
     end
+    describe "and sender_id and password given in options" do
+      it "should use given sender_id and password when creating transaction_id and digest" do
+        CompaniesHouse.should_receive(:create_transaction_id_and_digest).with(hash_including(:sender_id => 'foo123', :password => 'bar456'))
+        CompaniesHouse::Request.name_search_xml(:company_name => @company_name, :sender_id => 'foo123', :password => 'bar456')
+      end
+    end
   end
 
   describe "when asked for number search request xml" do
     it 'should create xml correctly' do
       request_xml = CompaniesHouse::Request.number_search_xml :company_number => @company_number
       request_xml.strip.should == @number_search_xml.strip
+    end
+    
+    describe "and sender_id and password given in options" do
+      it "should use given sender_id and password when creating transaction_id and digest" do
+        CompaniesHouse.should_receive(:create_transaction_id_and_digest).with(hash_including(:sender_id => 'foo123', :password => 'bar456'))
+        CompaniesHouse::Request.number_search_xml(:company_number => @company_number, :sender_id => 'foo123', :password => 'bar456')
+      end
     end
   end
 
@@ -79,6 +92,13 @@ describe CompaniesHouse::Request do
       CompaniesHouse.email.should == ''
       request_xml = CompaniesHouse::Request.company_details_xml :company_number => @company_number
       request_xml.strip.should == @company_details_xml.strip
+    end
+    
+    describe "and sender_id and password given in options" do
+      it "should use given sender_id and password when creating transaction_id and digest" do
+        CompaniesHouse.should_receive(:create_transaction_id_and_digest).with(hash_including(:sender_id => 'foo123', :password => 'bar456'))
+        CompaniesHouse::Request.company_details_xml(:company_number => @company_number, :sender_id => 'foo123', :password => 'bar456')
+      end
     end
   end
 

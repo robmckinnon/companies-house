@@ -137,8 +137,15 @@ describe CompaniesHouse do
         transaction_id.should == @transaction_id
         digest.should == @digest
       end
+      
+      describe "and password and sender_id passed as options" do
+        it "should use in preference to class ones" do
+          Digest::MD5.should_receive(:hexdigest).with("foo1234bar4567#{@transaction_id}")# @digest
+          CompaniesHouse.create_transaction_id_and_digest(:sender_id => 'foo1234', :password => 'bar4567')
+        end
+      end
     end
-
+    
     describe "when asked for name search request" do
       it 'should perform request correctly' do
         CompaniesHouse::Request.should_receive(:name_search_xml).with(:company_name=> @company_name).and_return @request_xml

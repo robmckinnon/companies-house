@@ -27,7 +27,7 @@ module CompaniesHouse
 
       def create options={}
         template = options.delete(:template)
-        transaction_id, digest = CompaniesHouse.create_transaction_id_and_digest
+        transaction_id, digest = CompaniesHouse.create_transaction_id_and_digest(options)
         params = {:digest => digest,
           :digest_method => CompaniesHouse.digest_method,
           :sender_id => CompaniesHouse.sender_id,
