@@ -14,7 +14,7 @@ require File.dirname(__FILE__) + '/companies_house/exception'
 $KCODE = 'UTF8' unless RUBY_VERSION >= "1.9"
 
 module CompaniesHouse
-  VERSION = "0.0.9.1" unless defined? CompaniesHouse::VERSION
+  VERSION = "0.1.0" unless defined? CompaniesHouse::VERSION
 
   class << self
 

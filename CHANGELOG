@@ -1,3 +1,5 @@
+v0.1.0. allow overriding of default sender_id and password by passing options
+
 v0.0.9. fixes bug preventing multiple sic codes being returned in query response
 
 v0.0.8. use Nokogiri instead of Hpricot
