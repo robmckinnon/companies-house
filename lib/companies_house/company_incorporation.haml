@@ -1,0 +1,141 @@
+%Body
+  %NumberSearchRequest{ :request_ns=>'' }
+    %PartialCompanyNumber= company_number
+    %DataSet= data_set
+    %SearchRows= search_rows
+
+%Body
+  %FormSubmission{xmlns: "http://xmlgw.companieshouse.gov.uk/Header", "xmlns:bs" => "http://xmlgw.companieshouse.gov.uk", "xmlns:xsi" => "http://www.w3.org/2001/XMLSchema-instance", "xsi:schemalocation" => "http://xmlgw.companieshouse.gov.uk/Header http://xmlgw.companieshouse.gov.uk/v1-0/schema/forms/FormSubmission-v1-1.xsd"}
+    %Formheader
+      %CompanyName TEST INC COMPANY LTD
+      %PackageReference 1828
+      %FormIdentifier CompanyIncorporation
+      %SubmissionNumber SUB006
+    %Authority
+      %Designation AGENT
+      %DateSigned 2008-05-31
+    %Form
+      %CompanyIncorporation{xmlns: "http://xmlgw.companieshouse.gov.uk", "xmlns:xsi" => "http://www.w3.org/2001/XMLSchema-instance", "xsi:schemalocation" => "http://xmlgw.companieshouse.gov.uk http://xmlgw.companieshouse.gov.uk/v1-0/schema/forms/CompanyIncorporation-v1-1.xsd"}
+        %SameDay false
+        %RegisteredOfficeAddress
+          %Premise 10
+          %Street The Street
+          %Thoroughfare Titchfield
+          %PostTown Fareham
+          %County Hants
+          %Country UK
+          %Postcode PO14 4HW
+        %CompanyType BYSHR
+        %CountryOfIncorporation EW
+        %Agent
+          %Person
+            %Forename Edwin
+            %Surname Crockford
+          %Address
+            %Premise 10
+            %Street The Street
+            %Thoroughfare
+            %PostTown Cardiff
+            %Postcode CF14 3UZ
+        %Appointment
+          %Authentication
+            %PersonalAttribute BIRTOWN
+            %PersonalData Sco
+          %Authentication
+            %PersonalAttribute PASSNO
+            %PersonalData 234
+          %Authentication
+            %PersonalAttribute EYE
+            %PersonalData Blu
+          %Director
+            %Address
+              %Premise 10
+              %Street The Street
+              %Thoroughfare
+              %PostTown Cardiff
+              %Postcode CF14 3UZ
+            %Person
+              %Surname Crockford
+              %Forename Phil
+              %Honours BEng
+              %DOB 1959-09-04
+              %Nationality British
+              %Occupation Hacker
+        %Appointment
+          %Authentication
+            %PersonalAttribute NATINS
+            %PersonalData YR1
+          %Authentication
+            %PersonalAttribute BIRTOWN
+            %PersonalData Sco
+          %Authentication
+            %PersonalAttribute PASSNO
+            %PersonalData 234
+          %Secretary
+            %Address
+              %Premise 10
+              %Street The Street
+              %PostTown Cardiff
+              %Postcode CF14 3UZ
+            %Corporate
+              %Forename Chris
+              %Surname Smith
+              %CorporateName The Nominee Corp
+        %AuthorisedCapital
+          %ShareClass Ordinary
+          %Currency GBP
+          %AuthorisedCapital 1000
+          %NumShares 5000
+          %ShareValue 0.2
+        %Subscribers
+          %TotalNumberShares 200
+          %Subscriber
+            %PersonalAuthenticationCode 040101
+            %NumShares 100
+          %Subscriber
+            %Corporate
+              %Forename Fred
+              %Surname Williams
+              %CorporateName The Investment Company
+            %Address
+              %Premise 10
+              %Street The Street
+              %Thoroughfare
+              %PostTown Cardiff
+              %Postcode CF14 3UZ
+            %Authentication
+              %PersonalAttribute NATINS
+              %PersonalData YR1
+            %Authentication
+              %PersonalAttribute BIRTOWN
+              %PersonalData Sco
+            %Authentication
+              %PersonalAttribute PASSNO
+              %PersonalData 234
+            %NumShares 100
+        %Declarant
+          %Person
+            %Forename Edwin
+            %Surname Crockford
+          %Address
+            %Premise 10
+            %Street The Street
+            %Thoroughfare
+            %PostTown Cardiff
+            %Postcode CF14 3UZ
+          %Authentication
+            %PersonalAttribute BIRTOWN
+            %PersonalData Sco
+          %Authentication
+            %PersonalAttribute PASSNO
+            %PersonalData 234
+          %Authentication
+            %PersonalAttribute EYE
+            %PersonalData Blu
+          %IncDesignation SOLICITOR
+    %Document
+      %Data TWVtb3JhbmR1bSBhbmQgQXJ0aWNsZXM=
+      %Date 2008-04-27
+      %Filename MemArts.pcl
+      %ContentType application/vnd.hp-pcl
+      %Category MEMARTS
