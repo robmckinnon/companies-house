@@ -58,9 +58,8 @@ describe CompaniesHouse do
       end
 
       def xml_error
-        %Q|<?xml version="1.0" encoding="UTF-8" ?>
-<GovTalkMessage xsi:schemaLocation="http://www.govtalk.gov.uk/schemas/govtalk/govtalkheader http://xmlgw.companieshouse.gov.uk/v1-0/schema/Egov_ch.xsd" xmlns="http://www.govtalk.gov.uk/schemas/govtalk/govtalkheader" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:gt="http://www.govtalk.gov.uk/schemas/govtalk/core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
-  <EnvelopeVersion>1.0</EnvelopeVersion>
+        %Q|<GovTalkMessage xsi:schemaLocation="http://www.govtalk.gov.uk/schemas/govtalk/govtalkheader http://xmlgw.companieshouse.gov.uk/v1-0/schema/Egov_ch.xsd" xmlns="http://www.govtalk.gov.uk/schemas/govtalk/govtalkheader" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:gt="http://www.govtalk.gov.uk/schemas/govtalk/core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <EnvelopeVersion>1.0</EnvelopeVersion>
   <Header>
     <MessageDetails>
       <Class>NameSearch</Class>
@@ -114,11 +113,11 @@ describe CompaniesHouse do
 
       float_time = 123.45678
       @transaction_id = 12345
-      Time.stub!(:now).and_return(mock('time', :to_f => float_time))
+      Time.stub(:now).and_return(double('time', :to_f => float_time))
       @digest = 'digest'
     end
 
-    describe "when asked for credientials" do
+    describe "when asked for credentials" do
       it 'should return sender_id correctly' do
         CompaniesHouse.sender_id.should == @sender_id
       end

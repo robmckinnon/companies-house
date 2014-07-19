@@ -1,5 +1,5 @@
 require 'rubygems'
-require 'lib/companies_house'
+require_relative 'lib/companies_house'
 
 begin
   require 'spec'
