@@ -7,6 +7,7 @@ require 'morph'
 require 'nokogiri'
 require 'haml'
 require 'yaml'
+require 'debugger'
 
 require File.dirname(__FILE__) + '/companies_house/request'
 require File.dirname(__FILE__) + '/companies_house/exception'
@@ -30,6 +31,11 @@ module CompaniesHouse
 
     def company_details number, options={}
       xml = CompaniesHouse::Request.company_details_xml options.merge(:company_number => number)
+      get_response(xml)
+    end
+
+    def company_incorporation options={}
+      xml = CompaniesHouse::Request.company_incorporation_xml options
       get_response(xml)
     end
 
