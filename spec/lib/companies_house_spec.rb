@@ -114,7 +114,7 @@ describe CompaniesHouse do
 
       float_time = 123.45678
       @transaction_id = 12345
-      Time.stub!(:now).and_return(mock('time', :to_f => float_time))
+      Time.stub(:now).and_return(double('time', :to_f => float_time))
       @digest = 'digest'
     end
 

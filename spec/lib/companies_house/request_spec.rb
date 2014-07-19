@@ -9,7 +9,7 @@ describe CompaniesHouse::Request do
     @email = 'x@y'
     CompaniesHouse.sender_id = @sender_id
     CompaniesHouse.email = @email
-    CompaniesHouse.stub!(:create_transaction_id_and_digest).and_return [@transaction_id, @digest]
+    CompaniesHouse.stub(:create_transaction_id_and_digest).and_return [@transaction_id, @digest]
 
     @name_search_type = 'NameSearch'
     @company_name = 'millennium stadium plc'
