@@ -117,7 +117,7 @@ describe CompaniesHouse do
       @digest = 'digest'
     end
 
-    describe "when asked for credientials" do
+    describe "when asked for credentials" do
       it 'should return sender_id correctly' do
         CompaniesHouse.sender_id.should == @sender_id
       end
