@@ -14,6 +14,10 @@ module CompaniesHouse
         create default(options).merge(:request_type=>'CompanyDetails', :template=>'company_details')
       end
 
+      def company_incorporation_xml options
+        create default(options).merge(request_type: 'FormSubmission', template: 'company_incorporation')
+      end
+
       private
 
       def default options

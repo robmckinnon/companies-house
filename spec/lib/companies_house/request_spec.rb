@@ -32,6 +32,188 @@ describe CompaniesHouse::Request do
       <CompanyNumber>#{@company_number}</CompanyNumber>
       <GiveMortTotals>1</GiveMortTotals>
     </CompanyDetailsRequest>|
+
+    @company_incorporation_type = 'FormSubmission'
+    @company_incorporation_xml = expected_xml @company_incorporation_type, %Q|<NumberSearchRequest xmlns="http://xmlgw.companieshouse.gov.uk/v1-0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlgw.companieshouse.gov.uk/v1-0/schema/FormSubmission.xsd">
+      <PartialCompanyNumber>03176906</PartialCompanyNumber>
+      <DataSet>LIVE</DataSet>
+      <SearchRows>20</SearchRows>
+    </NumberSearchRequest>
+  </Body>
+  <Body>
+    <FormSubmission xmlns:bs='http://xmlgw.companieshouse.gov.uk' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns='http://xmlgw.companieshouse.gov.uk/Header' xsi:schemalocation='http://xmlgw.companieshouse.gov.uk/Header http://xmlgw.companieshouse.gov.uk/v1-0/schema/forms/FormSubmission-v1-1.xsd'>
+      <Formheader>
+        <CompanyName>TEST INC COMPANY LTD</CompanyName>
+        <PackageReference>1828</PackageReference>
+        <FormIdentifier>CompanyIncorporation</FormIdentifier>
+        <SubmissionNumber>SUB006</SubmissionNumber>
+      </Formheader>
+      <Authority>
+        <Designation>AGENT</Designation>
+        <DateSigned>2008-05-31</DateSigned>
+      </Authority>
+      <Form>
+        <CompanyIncorporation xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns='http://xmlgw.companieshouse.gov.uk' xsi:schemalocation='http://xmlgw.companieshouse.gov.uk http://xmlgw.companieshouse.gov.uk/v1-0/schema/forms/CompanyIncorporation-v1-1.xsd'>
+          <SameDay>false</SameDay>
+          <RegisteredOfficeAddress>
+            <Premise>10</Premise>
+            <Street>The Street</Street>
+            <Thoroughfare>Titchfield</Thoroughfare>
+            <PostTown>Fareham</PostTown>
+            <County>Hants</County>
+            <Country>UK</Country>
+            <Postcode>PO14 4HW</Postcode>
+          </RegisteredOfficeAddress>
+          <CompanyType>BYSHR</CompanyType>
+          <CountryOfIncorporation>EW</CountryOfIncorporation>
+          <Agent>
+            <Person>
+              <Forename>Edwin</Forename>
+              <Surname>Crockford</Surname>
+            </Person>
+            <Address>
+              <Premise>10</Premise>
+              <Street>The Street</Street>
+              <Thoroughfare></Thoroughfare>
+              <PostTown>Cardiff</PostTown>
+              <Postcode>CF14 3UZ</Postcode>
+            </Address>
+          </Agent>
+          <Appointment>
+            <Authentication>
+              <PersonalAttribute>BIRTOWN</PersonalAttribute>
+              <PersonalData>Sco</PersonalData>
+            </Authentication>
+            <Authentication>
+              <PersonalAttribute>PASSNO</PersonalAttribute>
+              <PersonalData>234</PersonalData>
+            </Authentication>
+            <Authentication>
+              <PersonalAttribute>EYE</PersonalAttribute>
+              <PersonalData>Blu</PersonalData>
+            </Authentication>
+            <Director>
+              <Address>
+                <Premise>10</Premise>
+                <Street>The Street</Street>
+                <Thoroughfare></Thoroughfare>
+                <PostTown>Cardiff</PostTown>
+                <Postcode>CF14 3UZ</Postcode>
+              </Address>
+              <Person>
+                <Surname>Crockford</Surname>
+                <Forename>Phil</Forename>
+                <Honours>BEng</Honours>
+                <DOB>1959-09-04</DOB>
+                <Nationality>British</Nationality>
+                <Occupation>Hacker</Occupation>
+              </Person>
+            </Director>
+          </Appointment>
+          <Appointment>
+            <Authentication>
+              <PersonalAttribute>NATINS</PersonalAttribute>
+              <PersonalData>YR1</PersonalData>
+            </Authentication>
+            <Authentication>
+              <PersonalAttribute>BIRTOWN</PersonalAttribute>
+              <PersonalData>Sco</PersonalData>
+            </Authentication>
+            <Authentication>
+              <PersonalAttribute>PASSNO</PersonalAttribute>
+              <PersonalData>234</PersonalData>
+            </Authentication>
+            <Secretary>
+              <Address>
+                <Premise>10</Premise>
+                <Street>The Street</Street>
+                <PostTown>Cardiff</PostTown>
+                <Postcode>CF14 3UZ</Postcode>
+              </Address>
+              <Corporate>
+                <Forename>Chris</Forename>
+                <Surname>Smith</Surname>
+                <CorporateName>The Nominee Corp</CorporateName>
+              </Corporate>
+            </Secretary>
+          </Appointment>
+          <AuthorisedCapital>
+            <ShareClass>Ordinary</ShareClass>
+            <Currency>GBP</Currency>
+            <AuthorisedCapital>1000</AuthorisedCapital>
+            <NumShares>5000</NumShares>
+            <ShareValue>0.2</ShareValue>
+          </AuthorisedCapital>
+          <Subscribers>
+            <TotalNumberShares>200</TotalNumberShares>
+            <Subscriber>
+              <PersonalAuthenticationCode>040101</PersonalAuthenticationCode>
+              <NumShares>100</NumShares>
+            </Subscriber>
+            <Subscriber>
+              <Corporate>
+                <Forename>Fred</Forename>
+                <Surname>Williams</Surname>
+                <CorporateName>The Investment Company</CorporateName>
+              </Corporate>
+              <Address>
+                <Premise>10</Premise>
+                <Street>The Street</Street>
+                <Thoroughfare></Thoroughfare>
+                <PostTown>Cardiff</PostTown>
+                <Postcode>CF14 3UZ</Postcode>
+              </Address>
+              <Authentication>
+                <PersonalAttribute>NATINS</PersonalAttribute>
+                <PersonalData>YR1</PersonalData>
+              </Authentication>
+              <Authentication>
+                <PersonalAttribute>BIRTOWN</PersonalAttribute>
+                <PersonalData>Sco</PersonalData>
+              </Authentication>
+              <Authentication>
+                <PersonalAttribute>PASSNO</PersonalAttribute>
+                <PersonalData>234</PersonalData>
+              </Authentication>
+              <NumShares>100</NumShares>
+            </Subscriber>
+          </Subscribers>
+          <Declarant>
+            <Person>
+              <Forename>Edwin</Forename>
+              <Surname>Crockford</Surname>
+            </Person>
+            <Address>
+              <Premise>10</Premise>
+              <Street>The Street</Street>
+              <Thoroughfare></Thoroughfare>
+              <PostTown>Cardiff</PostTown>
+              <Postcode>CF14 3UZ</Postcode>
+            </Address>
+            <Authentication>
+              <PersonalAttribute>BIRTOWN</PersonalAttribute>
+              <PersonalData>Sco</PersonalData>
+            </Authentication>
+            <Authentication>
+              <PersonalAttribute>PASSNO</PersonalAttribute>
+              <PersonalData>234</PersonalData>
+            </Authentication>
+            <Authentication>
+              <PersonalAttribute>EYE</PersonalAttribute>
+              <PersonalData>Blu</PersonalData>
+            </Authentication>
+            <IncDesignation>SOLICITOR</IncDesignation>
+          </Declarant>
+        </CompanyIncorporation>
+      </Form>
+      <Document>
+        <Data>TWVtb3JhbmR1bSBhbmQgQXJ0aWNsZXM=</Data>
+        <Date>2008-04-27</Date>
+        <Filename>MemArts.pcl</Filename>
+        <ContentType>application/vnd.hp-pcl</ContentType>
+        <Category>MEMARTS</Category>
+      </Document>
+    </FormSubmission>|
   end
 
   describe "when asked for name search request xml" do
@@ -99,6 +281,13 @@ describe CompaniesHouse::Request do
         CompaniesHouse.should_receive(:create_transaction_id_and_digest).with(hash_including(:sender_id => 'foo123', :password => 'bar456'))
         CompaniesHouse::Request.company_details_xml(:company_number => @company_number, :sender_id => 'foo123', :password => 'bar456')
       end
+    end
+  end
+
+  describe "when incorporating a company request xml" do
+    it "should create xml correctly" do
+      request_xml = CompaniesHouse::Request.company_incorporation_xml :company_number => @company_number
+      request_xml.strip.should == @company_incorporation_xml.strip
     end
   end
 
